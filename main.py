@@ -10,8 +10,8 @@ def modifier_mot_cache(lettre, mot_solution,mot_cache):
         compteur+=1
     return mot_cache, nb_lettres_modifiees
 
-def initialiser_mot_caché(mot_solution) :
-    mot_caché=[]
+def initialiser_mot_cache(mot_solution) :
+    mot_cache=[]
     for i in mot_solution : #On parcourt chaque lettre du mot_solution
-        mot_caché.append("_") #Pour chaque lettre on va ajouter un "_" pour cacher le mot
-    return mot_caché
+        mot_cache.append("_") #Pour chaque lettre on va ajouter un "_" pour cacher le mot
+    return mot_cache
