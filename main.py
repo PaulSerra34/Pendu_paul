@@ -1,5 +1,5 @@
-l="test"
-l1=["_","_","s","_"]
+import random
+
 def modifier_mot_cache(lettre, mot_solution,mot_cache):
     compteur = 0  # pour identifier la position de lettre dans le mot caché
     nb_lettres_modifiees=0
@@ -44,5 +44,12 @@ def choisir_fichier():
         return "fichier_par_defaut.txt"
     else:
         return "mots_pendu.txt"
+
+def choisir_mot(nom_fichier):
+    with open(nom_fichier, "r", encoding="utf-8") as f:
+        mots = f.readlines()
+
+    mots = [mot.strip() for mot in mots]
+    return random.choice(mots)
 
 
