@@ -1,15 +1,12 @@
 l="test"
 l1=["_","_","s","_"]
-
-
-def f(lettre, mot_s,mot_c):
+def modifier_mot_cache(lettre, mot_solution,mot_cache):
     compteur = 0  # pour identifier la position de lettre dans le mot caché
-    nb_lettres_modifie=0
-    for i in mot_s:
-        if lettre==i: #On regarde à chaque élément du mot si la lettre apparaît
-            nb_lettres_modifie +=1
-            mot_c[compteur]=lettre #Si elle apparait dans mot caché alors on la "révèle"
+    nb_lettres_modifiees=0
+    for i in mot_solution :
+        if lettre==i: #On regarde à chaque élément du mot solution si la lettre apparaît
+            nb_lettres_modifiees +=1 #Elle apparait donc on a +1 lettre modifiée
+            mot_cache[compteur]=lettre #Elle apparaît dans mot caché donc on la "révèle" en remplaçant _ par lettre
         compteur+=1
-    return mot_c, nb_lettres_modifie
+    return mot_cache, nb_lettres_modifiees
 
-print(f("t",l,l1))
