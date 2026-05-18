@@ -15,3 +15,21 @@ def initialiser_mot_cache(mot_solution) :
     for i in mot_solution : #On parcourt chaque lettre du mot_solution
         mot_cache.append("_") #Pour chaque lettre on va ajouter un "_" pour cacher le mot
     return mot_cache
+
+def deroulement_partie_pendu(mot_solution) :
+    mot_cache=initialiser_mot_cache(mot_solution)
+    essais=6
+    vie=essais
+    while "_" in mot_cache and vie>0:
+        print(f"Il vous reste {vie} vies")
+        print(mot_cache)
+        lettre=input("Ecrivez la lettre à essayer : ")[0] #le [0] permet de s'assurer que l'on prend la 1ère lettre
+        mot_cache,nb_lettres_modifiees=modifier_mot_cache(lettre,mot_solution,mot_cache)
+        print(f"La lettre {lettre} est présente {nb_lettres_modifiees} fois dans le mot")
+        if nb_lettres_modifiees==0: #Si aucune lettre n'est modifiée on perd une vie
+            vie-=1
+    if vie==0:
+        print(f"Vous avez perdu, il ne vous reste plus aucune vie. Le mot était {mot_solution}")
+    else:
+        print(f"Félicitations, vous avez gagné ! Le mot était bien {mot_solution}")
+
