@@ -33,3 +33,16 @@ def deroulement_partie_pendu(mot_solution) :
     else:
         print(f"Félicitations, vous avez gagné ! Le mot était bien {mot_solution}")
 
+
+def choisir_fichier():
+    print("Voulez-vous utiliser le fichier par défaut ?")
+    choix = input("Tapez 'o' pour oui, 'n' pour utiliser votre fichier perso : ").lower()
+    while choix not in ["o", "n"]:
+        print("Saisie invalide.")
+        choix = input("Tapez 'o' pour oui, 'n' pour utiliser votre fichier perso : ").lower()
+    if choix == "o":
+        return "fichier_par_defaut.txt"
+    else:
+        return "mots_pendu.txt"
+
+
