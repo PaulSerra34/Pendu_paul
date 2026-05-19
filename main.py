@@ -52,4 +52,9 @@ def choisir_mot(nom_fichier):
     mots = [mot.strip() for mot in mots]
     return random.choice(mots)
 
+def demarrer_partie_pendu() :
+    nom_fichier=choisir_fichier()
+    mot_solution=choisir_mot(nom_fichier)
+    deroulement_partie_pendu(mot_solution)
+
 
