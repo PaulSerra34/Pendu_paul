@@ -16,10 +16,7 @@ def initialiser_mot_cache(mot_solution) :
         mot_cache.append("_") #Pour chaque lettre on va ajouter un "_" pour cacher le mot
     return mot_cache
 
-def deroulement_partie_pendu(mot_solution) :
-    mot_cache=initialiser_mot_cache(mot_solution)
-    essais=6
-    vie=essais
+def deroulement_partie_pendu(mot_solution, mot_cache, vie) :
     while "_" in mot_cache and vie>0:
         print(f"Il vous reste {vie} vies")
         print(mot_cache)
@@ -32,6 +29,15 @@ def deroulement_partie_pendu(mot_solution) :
         print(f"Vous avez perdu, il ne vous reste plus aucune vie. Le mot était {mot_solution}")
     else:
         print(f"Félicitations, vous avez gagné ! Le mot était bien {mot_solution}")
+    print("Voulez-vous redémarrer une partie ?")
+    choix=input("Tapez 'o' pour oui, 'n' pour non et arrêter le jeu : ").lower()
+    while choix not in ["o", "n"]:
+        print("Saisie invalide.")
+        choix = input("Tapez 'o' pour oui, 'n' pour non et arrêter le jeu : ").lower()
+    if choix=="o":
+        demarrer_partie_pendu()
+    else :
+        print("Merci d'avoir joué !")
 
 
 def choisir_fichier():
@@ -48,8 +54,29 @@ def choisir_fichier():
 def choisir_mot(nom_fichier):
     with open(nom_fichier, "r", encoding="utf-8") as f:
         mots = f.readlines()
-
     mots = [mot.strip() for mot in mots]
     return random.choice(mots)
+
+def demarrer_partie_pendu() :
+    nom_fichier=choisir_fichier()
+    mot_solution=choisir_mot(nom_fichier)
+    tentatives=modifier_nombre_tentatives()
+    mot_cache=initialiser_mot_cache(mot_solution)
+    deroulement_partie_pendu(mot_solution, mot_cache, tentatives)
+
+def modifier_nombre_tentatives():
+    tentatives=6 #valeur par défaut
+    print("Voulez-vous modifier le nombre de vies (6 par défaut) ?")
+    choix = input("Tapez 'o' pour oui, 'n' pour garder la valeur par défaut (6) : ").lower()
+    while choix not in ["o", "n"]:
+        print("Saisie invalide.")
+        choix = input("Tapez 'o' pour oui, 'n' pour utiliser votre fichier perso : ").lower()
+    if choix == "o":
+        tentatives= input("Veuillez écrire le nombre de tentatives : ")
+        while not tentatives.isdigit() and int(tentatives) >0: #empêche la saisie d'autre chose que d'un nombre strictement positif
+            print("Saisie invalide, veuillez entrer un nombre strictement positif.")
+            tentatives = input("Veuillez écrire le nombre de tentatives : ")
+        tentatives = int(tentatives)
+    return tentatives
 
 
