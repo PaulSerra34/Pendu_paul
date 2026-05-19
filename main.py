@@ -85,5 +85,6 @@ import unicodedata
 def normaliser_lettre(lettre): #Permet d'éviter les soucis d'accents et de majuscule (ex : a et à sont différents au départ)
     return unicodedata.normalize("NFD", lettre)[0].lower()
 
+
 def normaliser_mot(mot):
     return "".join(unicodedata.normalize("NFD", lettre)[0].lower() for lettre in mot) #uniformise les lettres au sein d'un mot
