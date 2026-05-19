@@ -21,6 +21,7 @@ def deroulement_partie_pendu(mot_solution, mot_cache, vie) :
         print(f"Il vous reste {vie} vies")
         print(mot_cache)
         lettre=input("Ecrivez la lettre à essayer : ")[0] #le [0] permet de s'assurer que l'on prend la 1ère lettre
+        lettre=normaliser_lettre(lettre)
         mot_cache,nb_lettres_modifiees=modifier_mot_cache(lettre,mot_solution,mot_cache)
         print(f"La lettre {lettre} est présente {nb_lettres_modifiees} fois dans le mot")
         if nb_lettres_modifiees==0: #Si aucune lettre n'est modifiée on perd une vie
@@ -59,7 +60,7 @@ def choisir_mot(nom_fichier):
 
 def demarrer_partie_pendu() :
     nom_fichier=choisir_fichier()
-    mot_solution=choisir_mot(nom_fichier)
+    mot_solution=normaliser_lettre(choisir_mot(nom_fichier))
     tentatives=modifier_nombre_tentatives()
     mot_cache=initialiser_mot_cache(mot_solution)
     deroulement_partie_pendu(mot_solution, mot_cache, tentatives)
@@ -73,10 +74,12 @@ def modifier_nombre_tentatives():
         choix = input("Tapez 'o' pour oui, 'n' pour utiliser votre fichier perso : ").lower()
     if choix == "o":
         tentatives= input("Veuillez écrire le nombre de tentatives : ")
-        while not tentatives.isdigit() and int(tentatives) >0: #empêche la saisie d'autre chose que d'un nombre strictement positif
+        while not tentatives.isdigit() or int(tentatives) >0: #empêche la saisie d'autre chose que d'un nombre strictement positif
             print("Saisie invalide, veuillez entrer un nombre strictement positif.")
             tentatives = input("Veuillez écrire le nombre de tentatives : ")
         tentatives = int(tentatives)
     return tentatives
 
 
+def normaliser_lettre(lettre):
+    return unicodedata.normalize("NFD", lettre)[0].lower()
