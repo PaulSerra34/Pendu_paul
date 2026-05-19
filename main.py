@@ -55,7 +55,10 @@ def deroulement_partie_pendu(mot_solution, mot_cache, vie) : #Fonction consistan
             mot_cache=aider_joueur(mot_solution, mot_cache) #Dévoile une lettre au joueur
             if "_" not in mot_cache:
                 continue #Court-cicuite la boucle dans le cas où l'aide dévoilerait la dernière lettre
-        lettre=input("Ecrivez la lettre à essayer : ")[0] #le [0] permet de s'assurer que l'on prend la 1ère lettre
+        lettre=input("Ecrivez la lettre à essayer : ")
+        while len(lettre) == 0 or not lettre.isalpha(): #Permet de s'assurer qu'on a écrit une seule lettre
+            print("Saisie invalide.")
+            lettre = input("Ecrivez la lettre à essayer : ")
         lettre=normaliser_lettre(lettre)  #Pour avoir les lettres en minuscules et sans accents
         mot_cache,nb_lettres_modifiees=modifier_mot_cache(lettre,mot_solution,mot_cache)
         print(f"La lettre {lettre} est présente {nb_lettres_modifiees} fois dans le mot")
@@ -88,10 +91,10 @@ def modifier_nombre_tentatives(): #Fonction pour modifier le nombre de tentative
     choix = input("Tapez 'o' pour oui, 'n' pour garder la valeur par défaut (6) : ").lower()
     while choix not in ["o", "n"]:
         print("Saisie invalide.")
-        choix = input("Tapez 'o' pour oui, 'n' pour utiliser votre fichier perso : ").lower()
+        choix = input("Tapez 'o' pour oui, 'n' pour utiliser la valeur par défaut (6) : ").lower()
     if choix == "o":
         tentatives= input("Veuillez écrire le nombre de tentatives : ")
-        while not tentatives.isdigit() or int(tentatives) >0: #empêche la saisie d'autre chose que d'un nombre strictement positif
+        while not tentatives.isdigit() or int(tentatives)<=0: #empêche la saisie d'autre chose que d'un nombre strictement positif
             print("Saisie invalide, veuillez entrer un nombre strictement positif.")
             tentatives = input("Veuillez écrire le nombre de tentatives : ")
         tentatives = int(tentatives)
