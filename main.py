@@ -27,15 +27,15 @@ def choisir_mot(nom_fichier): #Fonction permettant de choisir un mot dans un fic
 def initialiser_mot_cache(mot_solution) : #Fonction recréant une copie cachée du mot à trouver
     mot_cache=[]
     for i in mot_solution : #On parcourt chaque lettre du mot_solution
-        mot_cache.append("_") #Pour chaque lettre on va ajouter un "_" pour cacher le mot
+        mot_cache.append("_") #Pour chaque lettre on va ajouter un "_" pour cacher le mot "test"->"____"
     return mot_cache
 
 
 def modifier_mot_cache(lettre, mot_solution,mot_cache): #Permet de révéler les lettres trouvées
     compteur = 0  # pour identifier la position de lettre dans le mot caché
     nb_lettres_modifiees=0
-    for i in mot_solution :
-        if lettre==i: #On regarde à chaque élément du mot solution si la lettre apparaît
+    for i in mot_solution : #On regarde à chaque élément du mot solution si la lettre apparaît
+        if lettre==i:
             nb_lettres_modifiees +=1 #Elle apparait donc on a +1 lettre modifiée
             mot_cache[compteur]=lettre #Elle apparaît dans mot caché donc on la "révèle" en remplaçant _ par lettre
         compteur+=1
@@ -44,14 +44,14 @@ def modifier_mot_cache(lettre, mot_solution,mot_cache): #Permet de révéler les
 def normaliser_lettre(lettre): #Permet d'éviter les soucis d'accents et de majuscule pour les lettres (ex : a et à sont différents au départ)
     return unicodedata.normalize("NFD", lettre)[0].lower()
 
-def normaliser_mot(mot):
+def normaliser_mot(mot): #Fonction normaliser appliquée aux mots entiers
     return "".join(unicodedata.normalize("NFD", lettre)[0].lower() for lettre in mot) #uniformise les lettres au sein d'un mot
 
 def deroulement_partie_pendu(mot_solution, mot_cache, vie) : #Fonction consistant en l'itération d'une partie
     aide=1 #défini le nombre de fois que le joueur va être aidé
     while "_" in mot_cache and vie>0:
         print(f"Il vous reste {vie} vies")
-        print("".join(mot_cache)) #Le join permet de "lisser" le mot
+        print("".join(mot_cache)) #Le join permet de "lisser" l'affichage du mot_cache qui est au départ une liste
         if vie==1 and aide==1:
             mot_cache=aider_joueur(mot_solution, mot_cache) #Dévoile une lettre au joueur
             aide=0
@@ -72,7 +72,7 @@ def deroulement_partie_pendu(mot_solution, mot_cache, vie) : #Fonction consistan
         print(f"Félicitations, vous avez gagné ! Le mot était bien {mot_solution}")
     print("Voulez-vous redémarrer une partie ?")
     choix=input("Tapez 'o' pour oui, 'n' pour non et arrêter le jeu : ").lower()
-    while choix not in ["o", "n"]:
+    while choix not in ["o", "n"]: #évite les erreurs de saisie
         print("Saisie invalide.")
         choix = input("Tapez 'o' pour oui, 'n' pour non et arrêter le jeu : ").lower()
     if choix=="o":
@@ -91,7 +91,7 @@ def modifier_nombre_tentatives(): #Fonction pour modifier le nombre de tentative
     tentatives=6 #valeur par défaut
     print("Voulez-vous modifier le nombre de vies (6 par défaut) ?")
     choix = input("Tapez 'o' pour oui, 'n' pour garder la valeur par défaut (6) : ").lower()
-    while choix not in ["o", "n"]:
+    while choix not in ["o", "n"]: #évite les erreurs de saisie
         print("Saisie invalide.")
         choix = input("Tapez 'o' pour oui, 'n' pour utiliser la valeur par défaut (6) : ").lower()
     if choix == "o":
@@ -106,7 +106,7 @@ def aider_joueur(mot_solution, mot_cache):
     compteur=0
     while mot_cache[compteur]!="_": #On part du principe qu'il existe un "_" dans mot caché car sinon le joueur aurait gagné
         compteur+=1
-    lettre_aide=mot_solution[compteur]
+    lettre_aide=mot_solution[compteur] #Quand on sort du while on connait la position d'une lettre cachée
     mot_cache=modifier_mot_cache(lettre_aide,mot_solution,mot_cache)[0] #On affiche la lettre indice
     print(f"Pour vous aider voici une lettre bonus : {lettre_aide} !")
     print("Le mot que vous cherchez devient :")
