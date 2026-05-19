@@ -80,6 +80,7 @@ def modifier_nombre_tentatives():
         tentatives = int(tentatives)
     return tentatives
 
+import unicodedata
 
 def normaliser_lettre(lettre):
     return unicodedata.normalize("NFD", lettre)[0].lower()
