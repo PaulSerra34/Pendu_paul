@@ -32,6 +32,15 @@ def deroulement_partie_pendu(mot_solution) :
         print(f"Vous avez perdu, il ne vous reste plus aucune vie. Le mot était {mot_solution}")
     else:
         print(f"Félicitations, vous avez gagné ! Le mot était bien {mot_solution}")
+    print("Voulez-vous redémarrer une partie ?")
+    choix=input("Tapez 'o' pour oui, 'n' pour non et arrêter le jeu : ").lower()
+    while choix not in ["o", "n"]:
+        print("Saisie invalide.")
+        choix = input("Tapez 'o' pour oui, 'n' pour non et arrêter le jeu : ").lower()
+    if choix=="o":
+        demarrer_partie_pendu()
+    else :
+        print("Merci d'avoir joué !")
 
 
 def choisir_fichier():
