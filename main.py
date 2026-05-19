@@ -19,7 +19,7 @@ def initialiser_mot_cache(mot_solution) :
 def deroulement_partie_pendu(mot_solution, mot_cache, vie) :
     while "_" in mot_cache and vie>0:
         print(f"Il vous reste {vie} vies")
-        print(mot_cache)
+        print("".join(mot_cache)) #Le join permet de "lisser" le mot
         lettre=input("Ecrivez la lettre à essayer : ")[0] #le [0] permet de s'assurer que l'on prend la 1ère lettre
         lettre=normaliser_lettre(lettre)
         mot_cache,nb_lettres_modifiees=modifier_mot_cache(lettre,mot_solution,mot_cache)
@@ -60,7 +60,7 @@ def choisir_mot(nom_fichier):
 
 def demarrer_partie_pendu() :
     nom_fichier=choisir_fichier()
-    mot_solution=normaliser_lettre(choisir_mot(nom_fichier))
+    mot_solution=normaliser_mot(choisir_mot(nom_fichier))
     tentatives=modifier_nombre_tentatives()
     mot_cache=initialiser_mot_cache(mot_solution)
     deroulement_partie_pendu(mot_solution, mot_cache, tentatives)
@@ -82,5 +82,8 @@ def modifier_nombre_tentatives():
 
 import unicodedata
 
-def normaliser_lettre(lettre):
+def normaliser_lettre(lettre): #Permet d'éviter les soucis d'accents et de majuscule (ex : a et à sont différents au départ)
     return unicodedata.normalize("NFD", lettre)[0].lower()
+
+def normaliser_mot(mot):
+    return "".join(unicodedata.normalize("NFD", lettre)[0].lower() for lettre in mot) #uniformise les lettres au sein d'un mot
