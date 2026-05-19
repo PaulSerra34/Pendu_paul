@@ -48,11 +48,13 @@ def normaliser_mot(mot):
     return "".join(unicodedata.normalize("NFD", lettre)[0].lower() for lettre in mot) #uniformise les lettres au sein d'un mot
 
 def deroulement_partie_pendu(mot_solution, mot_cache, vie) : #Fonction consistant en l'itération d'une partie
+    aide=1 #défini le nombre de fois que le joueur va être aidé
     while "_" in mot_cache and vie>0:
         print(f"Il vous reste {vie} vies")
         print("".join(mot_cache)) #Le join permet de "lisser" le mot
-        if vie==1:
+        if vie==1 and aide==1:
             mot_cache=aider_joueur(mot_solution, mot_cache) #Dévoile une lettre au joueur
+            aide=0
             if "_" not in mot_cache:
                 continue #Court-cicuite la boucle dans le cas où l'aide dévoilerait la dernière lettre
         lettre=input("Ecrivez la lettre à essayer : ")
@@ -106,7 +108,7 @@ def aider_joueur(mot_solution, mot_cache):
         compteur+=1
     lettre_aide=mot_solution[compteur]
     mot_cache=modifier_mot_cache(lettre_aide,mot_solution,mot_cache)[0] #On affiche la lettre indice
-    print(f"Pour vous aider voici une lettre bonus {lettre_aide} !")
+    print(f"Pour vous aider voici une lettre bonus : {lettre_aide} !")
     print("Le mot que vous cherchez devient :")
     print("".join(mot_cache))
     return mot_cache
